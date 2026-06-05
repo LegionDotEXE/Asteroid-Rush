@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
+        StartGame();
     }
 
     void Update()
@@ -48,4 +48,10 @@ public class GameManager : MonoBehaviour
 
     public float GetTimeRemaining() => timeRemaining;
     public bool IsGameActive() => gameStarted;
+
+    public void TriggerLoss()
+    {
+        gameStarted = false;
+        Debug.Log("Engine failure.");
+    }
 }
