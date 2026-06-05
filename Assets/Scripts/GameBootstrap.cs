@@ -17,7 +17,6 @@ public class GameBootstrap : MonoBehaviour
 
     [Header("Camera")]
     public Color backgroundColor = new Color(0.025f, 0.03f, 0.06f, 1f);
-    public float cameraOrthoSize = 6f;
 
     [Header("Visuals")]
     public bool spawnStarfield = true;
@@ -44,8 +43,6 @@ public class GameBootstrap : MonoBehaviour
 
         cam.backgroundColor = backgroundColor;
         cam.clearFlags = CameraClearFlags.SolidColor;
-        cam.orthographic = true;
-        cam.orthographicSize = cameraOrthoSize;
 
         if (cam.GetComponent<CameraShake>() == null) cam.gameObject.AddComponent<CameraShake>();
 
@@ -96,11 +93,11 @@ public class GameBootstrap : MonoBehaviour
         if (radar == null) radar = new GameObject("Radar").AddComponent<RadarController>();
         radar.ship = ship.transform;
         radar.diffManager = diff;
-        float halfX = cameraOrthoSize * cam.aspect;
-        float halfY = cameraOrthoSize;
+        float halfX = cam.orthographicSize * cam.aspect;
+        float halfY = cam.orthographicSize;
         radar.radarOffset = new Vector3(halfX - radar.radarRadius - 0.4f, -halfY + radar.radarRadius + 0.7f, 1f);
-        radar.detectionRange = cameraOrthoSize * 2.4f;
-        radar.warningRange = cameraOrthoSize * 1.2f;
+        radar.detectionRange = cam.orthographicSize * 2.4f;
+        radar.warningRange = cam.orthographicSize * 1.2f;
 
         audioMgr = FindObjectOfType<AudioManager>();
         if (audioMgr != null)
