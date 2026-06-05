@@ -19,7 +19,6 @@ public class EndScreen : MonoBehaviour
     public Color promptColor = new Color(0.6f, 0.85f, 1f);
 
     [Header("Backdrop")]
-    public VignetteOverlay backdrop;
     public Color winBackdrop = new Color(0.05f, 0.15f, 0.08f, 0.75f);
     public Color lossBackdrop = new Color(0.15f, 0.05f, 0.05f, 0.85f);
 
@@ -27,9 +26,15 @@ public class EndScreen : MonoBehaviour
     public Transform shipFlame;
 
     bool showing = false;
+    SpriteRenderer backdropSprite;
+    Camera cam;
 
     void Start()
     {
+        cam = Camera.main;
+        backdropSprite = BuildBackdrop();
+        backdropSprite.color = new Color(0, 0, 0, 0);
+
         if (titleText != null)    SetAlpha(titleText, 0f);
         if (subtitleText != null) SetAlpha(subtitleText, 0f);
         if (promptText != null)   SetAlpha(promptText, 0f);
@@ -75,11 +80,12 @@ public class EndScreen : MonoBehaviour
 
     void HandleRestart()
     {
+        StopAllCoroutines();
         showing = false;
         if (titleText != null)    SetAlpha(titleText, 0f);
         if (subtitleText != null) SetAlpha(subtitleText, 0f);
         if (promptText != null)   SetAlpha(promptText, 0f);
-        if (backdrop != null)     backdrop.SetAlpha(0f);
+        if (backdropSprite != null) backdropSprite.color = new Color(0, 0, 0, 0);
     }
 
     IEnumerator ShowSequence(bool win)
@@ -87,12 +93,11 @@ public class EndScreen : MonoBehaviour
         if (win && shipFlame != null)
             StartCoroutine(EngineSputter());
 
-        yield return new WaitForSeconds(win ? 0.8f : 0.4f);
+        yield return StartCoroutine(FadeBackdrop(win ? winBackdrop : lossBackdrop, 0.6f));
 
         if (titleText != null)
         {
             titleText.text = win ? "ESCAPED" : "ENGINE FAILURE";
-            titleText.color = (win ? winColor : lossColor);
             yield return FadeIn(titleText, win ? winColor : lossColor, 0.6f);
         }
 
@@ -106,18 +111,28 @@ public class EndScreen : MonoBehaviour
             yield return FadeIn(subtitleText, subColor, 0.4f);
         }
 
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.4f);
 
+        showing = true;
         if (promptText != null)
         {
             promptText.text = "press SPACE to retry";
             StartCoroutine(PromptPulse());
         }
+    }
 
-        showing = true;
-
-        if (backdrop != null)
-            backdrop.SetColor(win ? winBackdrop : lossBackdrop);
+    IEnumerator FadeBackdrop(Color target, float duration)
+    {
+        if (backdropSprite == null) yield break;
+        Color start = backdropSprite.color;
+        float t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            backdropSprite.color = Color.Lerp(start, target, t / duration);
+            yield return null;
+        }
+        backdropSprite.color = target;
     }
 
     IEnumerator EngineSputter()
@@ -159,7 +174,7 @@ public class EndScreen : MonoBehaviour
             float a = 0.5f + Mathf.Sin(Time.time * 3f) * 0.4f;
             Color c = promptColor;
             c.a = Mathf.Clamp01(a);
-            promptText.color = c;
+            if (promptText != null) promptText.color = c;
             yield return null;
         }
     }
@@ -169,5 +184,26 @@ public class EndScreen : MonoBehaviour
         Color c = tm.color;
         c.a = a;
         tm.color = c;
+    }
+
+    SpriteRenderer BuildBackdrop()
+    {
+        GameObject go = new GameObject("EndBackdrop");
+        go.transform.SetParent(cam.transform);
+        go.transform.localPosition = new Vector3(0f, 0f, 1.5f);
+        go.transform.localRotation = Quaternion.identity;
+
+        float h = cam.orthographicSize * 2f;
+        float w = h * cam.aspect;
+        go.transform.localScale = new Vector3(w * 1.2f, h * 1.2f, 1f);
+
+        SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+
+        Texture2D tex = new Texture2D(1, 1);
+        tex.SetPixel(0, 0, Color.white);
+        tex.Apply();
+        sr.sprite = Sprite.Create(tex, new Rect(0, 0, 1, 1), new Vector2(0.5f, 0.5f), 1f);
+        sr.sortingOrder = 50;
+        return sr;
     }
 }

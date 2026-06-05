@@ -355,12 +355,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258612635}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1004512735}
+  m_Father: {fileID: 1093833312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &285871566
 GameObject:
@@ -763,12 +763,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 355541388}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1004512735}
+  m_Father: {fileID: 1093833312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &509400780
 GameObject:
@@ -867,12 +867,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 509400780}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.5, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.5, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1004512735}
+  m_Father: {fileID: 1093833312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &680603323
 GameObject:
@@ -962,8 +962,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faeb2f78f1cae5d4391ea6f10d3724b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EndScreen
-  gameManager: {fileID: 0}
-  shipHealth: {fileID: 0}
+  gameManager: {fileID: 680603325}
+  shipHealth: {fileID: 285871567}
   titleText: {fileID: 258612636}
   subtitleText: {fileID: 355541389}
   promptText: {fileID: 509400781}
@@ -971,7 +971,6 @@ MonoBehaviour:
   lossColor: {r: 0.95, g: 0.3, b: 0.25, a: 1}
   subColor: {r: 0.85, g: 0.85, b: 0.9, a: 1}
   promptColor: {r: 0.6, g: 0.85, b: 1, a: 1}
-  backdrop: {fileID: 1093833313}
   winBackdrop: {r: 0.05, g: 0.15, b: 0.08, a: 0.75}
   lossBackdrop: {r: 0.15, g: 0.05, b: 0.05, a: 0.85}
   shipFlame: {fileID: 298126580}
@@ -987,10 +986,66 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 258612638}
-  - {fileID: 355541391}
-  - {fileID: 509400783}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1068919126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1068919128}
+  - component: {fileID: 1068919127}
+  m_Layer: 0
+  m_Name: GameBootstrap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1068919127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068919126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a67fa99089c74f4ebe8144ed1e87307, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameBootstrap
+  obstaclePrefabs:
+  - {fileID: 591038965189063412, guid: e28f575e6aac4aa4a8e7cfb8210eca6f, type: 3}
+  - {fileID: 3827726153052160184, guid: 13728df2e7f95da4b8fc3d00a8249432, type: 3}
+  - {fileID: 4096770113842263402, guid: 0fc0774b1979e2047af16a49017442f3, type: 3}
+  - {fileID: 6551551384843259879, guid: 4f60e8b72a286654bac29ce2ec7b8f05, type: 3}
+  - {fileID: 4415255341405238223, guid: 430d369ac6434da45a1ee76c8a998eb7, type: 3}
+  obstacleWeights: []
+  scrapPrefab: {fileID: 470257356662870717, guid: ec7e00ef89c1b5542b89bd323025be93, type: 3}
+  autoDiscoverChildren: 1
+  ship: {fileID: 0}
+  shipFlame: {fileID: 0}
+  backgroundColor: {r: 0.025, g: 0.03, b: 0.06, a: 1}
+  cameraOrthoSize: 6
+  spawnStarfield: 1
+  starCount: 80
+--- !u!4 &1068919128
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068919126}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1093797703
@@ -1222,7 +1277,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 258612638}
+  - {fileID: 355541391}
+  - {fileID: 509400783}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1093833313
@@ -1510,3 +1568,4 @@ SceneRoots:
   - {fileID: 206272600}
   - {fileID: 313506599}
   - {fileID: 1004512735}
+  - {fileID: 1068919128}
